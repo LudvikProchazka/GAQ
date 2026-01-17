@@ -72,7 +72,8 @@ void Elipsoid()
 	GAQ r = r1 + r2 + r3 + r4 + r5 + r6;
 	GAQ R = r.RotorExponential(30, phi); //Rotor in the xy-plane
 
-	Blade transformed = (R * (T * Q * ~T)[1] * ~R)[1];
+	Blade translated = (T * Q * ~T)[1];
+	Blade transformed = (R * translated * ~R)[1];
 
 	std::cout << "Quadric: " << Q << std::endl;
 	std::cout << "transformed: " << transformed << std::endl;

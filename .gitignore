@@ -23,3 +23,4 @@
 *.lib
 /GAQ/x64
 /GAQ_MSUT/x64
+/GAQ_MSUT/Release
