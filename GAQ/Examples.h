@@ -48,7 +48,7 @@ void OPNS_IPNS_Duality()
 	std::cout << "      IPNS: " << IPNS << std::endl;
 }
 
-void Elipsoid()
+void Ellipsoid()
 {
 	using namespace gaq;
 
@@ -79,7 +79,7 @@ void Elipsoid()
 	std::cout << "transformed: " << transformed << std::endl;
 }
 
-void Elipsoid2()
+void Ellipsoid2()
 {
 	using namespace gaq;
 

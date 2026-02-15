@@ -64,7 +64,7 @@ public:
 		return GAQ::operator+(other);
 	}
 
-	static void Elipsoid()
+	static void Ellipsoid()
 	{
 		PROFILE_FUNCTION();
 
@@ -120,6 +120,6 @@ public:
 	{
 		PROFILE_FUNCTION();
 
-		Elipsoid();
+		Ellipsoid();
 	}
 };
