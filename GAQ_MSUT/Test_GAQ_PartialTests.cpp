@@ -415,5 +415,40 @@ namespace GAQ_MSUT
 
 			Assert::IsTrue(translatorX == expected);
 		}
+
+		TEST_METHOD(Test_Conjugate)
+		{
+			GAQ::GenerateGeneratingBlades();
+
+			GAQ a1 = e1 * e2;
+			GAQ a2 = e1 * e2 * e3 * e4 * e5 * e6 * e7 * e8 * e9;
+			GAQ a3 = e1 * e2 * e10;
+			GAQ a4 = e1 * e2 * e3 * e4 * e5 * e6 * e7 * e8 * e9 * e10 * e11;
+			GAQ a5 = e1 * e2 * e3 * e4 * e5 * e6 * e7 * e8 * e9 * e10 * e11 * e12;
+			GAQ a6 = 8 * e1 * e2 * e3 * e4 * e5 * e6 * e7 * e8 * e9 * e10 * e11 * e12;
+			GAQ a7 = 2 * one;
+
+
+			Assert::IsTrue(a1.Conjugate() == -1 * a1);
+			Assert::IsTrue(a1 * a1.Conjugate() == one);
+
+			Assert::IsTrue(a2.Conjugate() == a2);
+			Assert::IsTrue(a2 * a2.Conjugate() == one);
+
+			Assert::IsTrue(a3.Conjugate() == a3);
+			Assert::IsTrue(a3 * a3.Conjugate() == one);
+			
+			Assert::IsTrue(a4.Conjugate() == -1 * a4);
+			Assert::IsTrue(a4 * a4.Conjugate() == one);
+			
+			Assert::IsTrue(a5.Conjugate() == -1 * a5);
+			Assert::IsTrue(a5 * a5.Conjugate() == one);
+			
+			Assert::IsTrue(a6.Conjugate() == -1 * a6);
+			Assert::IsTrue(a6 * a6.Conjugate() == 64 * one);
+			
+			Assert::IsTrue(a7.Conjugate() == a7);
+			Assert::IsTrue(a7 * a7.Conjugate() == 2 * a7);
+		}
 	};
 }
