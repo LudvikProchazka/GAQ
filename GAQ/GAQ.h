@@ -123,6 +123,7 @@ public:
 	GAQ operator^(const GAQ& other) const;		// Outer product operator
 	GAQ operator^(int exponent) const;			// Exponent operator
 	GAQ operator/(long double divider) const;	// Dividing operator
+	GAQ Conjugate() const;
 	GAQ ScalarProduct(const GAQ& b) const;
 
 	static GAQ Rotate(const GAQ& point, rotation_planes plane, long double angle);
@@ -134,6 +135,7 @@ public:
 	static GAQ generatingBlades[];				// Stores 1,e1,e2,...,en.
 
 protected:
+	GAQ ConjugateBasisBlade() const;
 	static int CalculateSign(int* permutation, int count);			// Helps in validating basis Element, calculates sign of permutation
 	static std::string SimplifyBasisBlade(std::string_view label, int& sign);	// Simplifies label in a form of for example  e1e2e3e2e3 into e1
 	static void ProcessVector(std::vector<int>& vec, int& sign);	// Used when simplifying results of geometric product: e1e2e5e2e3e4e5 -> e1e5e3e4e5 -> e1e3e4 represented byjust numbers (1252345 -> 15345 ...)

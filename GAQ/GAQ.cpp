@@ -116,36 +116,31 @@ long double GAQ::ToNumeric() // returns coefficient at basis vector 1
 
 bool GAQ::IsEqual(const GAQ& other, double precision) const
 {
-	bool equal{true};
 	for (const auto& [basisBlade, value] : m_mapLabelToCoefficient)
 	{
 		if (other.m_mapLabelToCoefficient.find(basisBlade) == other.m_mapLabelToCoefficient.end()) //if there is on the right not the same basis blade as on the left
 		{
-			equal = false;
-			break;
+			return false;
 		}
 		//if there is, check for coefs if they are the same
 		if (abs(other.m_mapLabelToCoefficient.at(basisBlade) - value) > 1.0 / precision)
 		{
-			equal = false;
-			break;
+			return false;
 		}
 	}
 	for (const auto& [basisBlade, value] : other.m_mapLabelToCoefficient) //now vice versa
 	{
 		if (m_mapLabelToCoefficient.find(basisBlade) == m_mapLabelToCoefficient.end())
 		{
-			equal = false;
-			break;
+			return false;
 		}
 		//if there is, check for coefs if they are the same
 		if (abs(other.m_mapLabelToCoefficient.at(basisBlade) - value) > 1.0 / precision)
 		{
-			equal = false;
-			break;
+			return false;
 		}
 	}
-	return equal;
+	return true;
 }
 
 //************************************MEMBER_OPERATOR************************************\\
@@ -195,7 +190,7 @@ GAQ& GAQ::operator=(GAQ&& other) noexcept
 
 bool GAQ::operator==(const GAQ& other) const
 {
-	return this->IsEqual(other, 1e9);
+	return this->IsEqual(other, PRECISION);
 }
 
 bool GAQ::operator!=(const GAQ& other) const
@@ -476,9 +471,20 @@ GAQ GAQ::operator/(long double divider) const
 	return *this * (1.0 / divider);
 }
 
+GAQ GAQ::Conjugate() const
+{
+	GAQ res;
+	for (const auto& [key, coeff] : m_mapLabelToCoefficient)
+	{
+		GAQ basisBlade = (coeff * GAQ(key)).ConjugateBasisBlade();
+		res = res + basisBlade;
+	}
+	return res;
+}
+
 GAQ GAQ::ScalarProduct(const GAQ& b) const
 {
-	return (*this * b)[0];
+	return (*this * b.Conjugate())[0];
 }
 
 
@@ -557,6 +563,26 @@ std::string GAQ::Log() const
 }
 
 //************************************PRROTECTED************************************\\
+
+GAQ GAQ::ConjugateBasisBlade() const
+{
+	int r = 0;
+	for (int i = ALGEBRA_P + 1; i <= ALGEBRA_P + ALGEBRA_Q; ++i)
+	{
+		const auto& key = m_mapLabelToCoefficient.begin()->first;
+		if (key.contains("e" + std::to_string(i)))
+		{
+			r++;
+		}
+	}
+
+	long double k = 0;
+	for (const auto& [key, value] : m_mapLabelToCoefficient) 
+	{
+		k = std::count(key.begin(), key.end(), 'e');
+	}
+	return std::pow(-1, r) * std::pow(-1, k * (k - 1.0) / 2.0) * *this;;
+}
 
 //calculates sign of permutation
 int GAQ::CalculateSign(int* permutation, int count) 
