@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/729484087.svg)](https://doi.org/10.5281/zenodo.20546158)
+
 Introduction
 
 GAQ is a small C++ project exploring geometric algebra computations in a way that’s meant to be readable, easy to debug, and conceptually clear.
